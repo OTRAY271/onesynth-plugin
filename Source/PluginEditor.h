@@ -24,6 +24,7 @@
 #include "PluginProcessor.h"
 #include "OperatorEditor.h"
 #include "GlobalEditor.h"
+#include "MainEditor.h"
 #include "DXComponents.h"
 #include "DXLookNFeel.h"
 #include "CartManager.h"
@@ -42,6 +43,7 @@ class DexedAudioProcessorEditor  : public AudioProcessorEditor, public ComboBox:
 public:
     DexedAudioProcessor *processor;
     GlobalEditor global;
+    MainEditor mainEditor;
     
     DexedAudioProcessorEditor (DexedAudioProcessor* ownerFilter);
     ~DexedAudioProcessorEditor();
@@ -63,8 +65,8 @@ public:
     virtual bool isInterestedInFileDrag (const StringArray &files) override;
     virtual void filesDropped (const StringArray &files, int x, int y ) override;
                                        
-    static const int WINDOW_SIZE_X = 866;
-    static const int WINDOW_SIZE_Y = 674;
+    static const int WINDOW_SIZE_X = 310;
+    static const int WINDOW_SIZE_Y = 228;
 };
 
 

@@ -14,9 +14,9 @@ message(STATUS "Building Dexed in formats: ${DEXED_JUCE_FORMATS}")
 
 juce_add_plugin("${BaseTargetName}"
         VERSION "1.0.0"   # FORCING THIS SINCE OLDER VERSION WILL NOT BE ABLE TO SYNC PLUGIN DATA. THIS WILL GET UPDATED ONCE 1.0 is released.
-        ICON_BIG "../Resources/ui/dexedIcon.png"
-        ICON_SMALL "../Resources/ui/dexedIcon.png"
-        COMPANY_NAME "Digital Suburban"
+        ICON_BIG "../Resources/ui/oneSynthIcon.png"
+        ICON_SMALL "../Resources/ui/oneSynthIcon.png"
+        COMPANY_NAME "OneSynth"
         IS_SYNTH TRUE
         NEEDS_MIDI_INPUT TRUE
         NEEDS_MIDI_OUTPUT TRUE
@@ -25,8 +25,8 @@ juce_add_plugin("${BaseTargetName}"
         PLUGIN_MANUFACTURER_CODE DGSB
         PLUGIN_CODE Dexd
         FORMATS ${DEXED_JUCE_FORMATS}
-        PRODUCT_NAME "Dexed"
-        DESCRIPTION "Dexed FM Synth"
+        PRODUCT_NAME "OneSynth"
+        DESCRIPTION "AI Synthesizer OneSynth"
 )
 
 clap_juce_extensions_plugin(TARGET ${BaseTargetName}
@@ -45,11 +45,13 @@ target_sources(${BaseTargetName} PRIVATE
 	EngineMkI.cpp
 	EngineOpl.cpp
 	GlobalEditor.cpp
+	MainEditor.cpp
 	OperatorEditor.cpp
 	ParamDialog.cpp
 	PluginData.cpp
 	PluginEditor.cpp
 	PluginFx.cpp
+	InferEngine.cpp
 	PluginParam.cpp
 	PluginProcessor.cpp
 	ProgramListBox.cpp

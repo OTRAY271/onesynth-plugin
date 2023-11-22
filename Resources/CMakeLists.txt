@@ -5,7 +5,7 @@ endif()
 
 juce_add_binary_data(DexedResources SOURCES
     ui/ButtonUnlabeled_50x30.png
-    ui/dexedIcon.png
+    ui/oneSynthIcon.png
     ui/dexed-logo.png
     ui/GlobalEditor_1728x288.png
     ui/HelpButton.png

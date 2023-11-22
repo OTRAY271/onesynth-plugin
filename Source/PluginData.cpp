@@ -322,10 +322,14 @@ void DexedAudioProcessor::getStateInformation(MemoryBlock& destData) {
     
     XmlElement dexedState("dexedState");
     XmlElement *dexedBlob = dexedState.createNewChildElement("dexedBlob");
-    
     dexedState.setAttribute("cutoff", fx.uiCutoff);
     dexedState.setAttribute("reso", fx.uiReso);
     dexedState.setAttribute("gain", fx.uiGain);
+    dexedState.setAttribute("searchPosition", oneSynthParams.searchPosition);
+    json zJson = oneSynthParams.z;
+    dexedState.setAttribute("z", zJson.dump());
+    json basisJson = oneSynthParams.basis;
+    dexedState.setAttribute("basis", basisJson.dump());
     dexedState.setAttribute("currentProgram", currentProgram);
     dexedState.setAttribute("monoMode", monoMode);
     dexedState.setAttribute("engineType", (int) engineType);
@@ -391,6 +395,20 @@ void DexedAudioProcessor::setStateInformation(const void* source, int sizeInByte
     fx.uiCutoff = root->getDoubleAttribute("cutoff");
     fx.uiReso = root->getDoubleAttribute("reso");
     fx.uiGain = root->getDoubleAttribute("gain");
+    oneSynthParams.searchPosition = root->getDoubleAttribute("searchPosition");
+    String zStr = root->getStringAttribute("z", "");
+    if (zStr.length() == 0) {
+        File file ("~/Library/Application Support/OneSynth/presets/piano.json");
+        zStr = file.loadFileAsString();
+    }
+    oneSynthParams.z = json::parse(zStr.toStdString()).template get<std::vector<float>>();
+    String basisStr = root->getStringAttribute("basis", "");
+    if (basisStr.length() == 0) {
+        std::vector<float> zeros(256, 0);
+        oneSynthParams.basis = zeros;
+    } else {
+        oneSynthParams.basis = json::parse(basisStr.toStdString()).template get<std::vector<float>>();
+    }
     currentProgram = root->getIntAttribute("currentProgram");
     
     String opSwitchValue = root->getStringAttribute("opSwitch");
@@ -500,23 +518,23 @@ void DexedAudioProcessor::resolvAppDir() {
         if ( parent.isDirectory() ) {
             dexedAppDir = parent;
         } else {
-            dexedAppDir = File("~/Library/Application Support/DigitalSuburban/Dexed");
+            dexedAppDir = File("~/Library/Application Support/OneSynth");
         }
     #elif JUCE_WINDOWS
-        if ( File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("Dexed").isDirectory() ) {
-            dexedAppDir = File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("Dexed");
+        if ( File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("OneSynth").isDirectory() ) {
+            dexedAppDir = File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("OneSynth");
         } else {
-            dexedAppDir = File::getSpecialLocation(File::userApplicationDataDirectory).getChildFile("DigitalSuburban").getChildFile("Dexed");
+            dexedAppDir = File::getSpecialLocation(File::userApplicationDataDirectory).getChildFile("OneSynth");
         }
     #else
-        if ( File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("Dexed").isDirectory() ) {
-            dexedAppDir = File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("Dexed");
+        if ( File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("OneSynth").isDirectory() ) {
+            dexedAppDir = File::getSpecialLocation(File::currentExecutableFile).getSiblingFile("OneSynth");
         } else {
             char *xdgHome = getenv("XDG_DATA_HOME");
             if ( xdgHome == nullptr ) {
-                dexedAppDir = File("~/.local/share").getChildFile("DigitalSuburban").getChildFile("Dexed");
+                dexedAppDir = File("~/.local/share").getChildFile("OneSynth");
             } else {
-                dexedAppDir = File(xdgHome).getChildFile("DigitalSuburban").getChildFile("Dexed");
+                dexedAppDir = File(xdgHome).getChildFile("OneSynth");
             }
         }
     #endif
@@ -526,9 +544,9 @@ void DexedAudioProcessor::resolvAppDir() {
         // ==========================================================================
         // For older versions, we move the Dexed.xml config file
         // This code will be removed in 0.9.0
-        File cfgFile = dexedAppDir.getParentDirectory().getChildFile("Dexed.xml");
+        File cfgFile = dexedAppDir.getParentDirectory().getChildFile("OneSynth.xml");
         if ( cfgFile.exists() )
-            cfgFile.moveFileTo(dexedAppDir.getChildFile("Dexed.xml"));
+            cfgFile.moveFileTo(dexedAppDir.getChildFile("OneSynth.xml"));
         // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
         // ==========================================================================
     }

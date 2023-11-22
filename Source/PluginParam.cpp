@@ -612,6 +612,9 @@ void DexedAudioProcessor::initCtrl() {
         opCtrl[opVal].opSwitch.reset(new CtrlOpSwitch(opSwitchLabel, (char *)&(controllers.opSwitch)+(5-i), this));
         ctrl.add(opCtrl[opVal].opSwitch.get());
     }
+
+    searchPosition.reset(new CtrlFloat("SearchPosition", &oneSynthParams.searchPosition));
+    ctrl.add(searchPosition.get());
     
     for (int i=0; i < ctrl.size(); i++) {
         ctrl[i]->idx = i;
@@ -677,11 +680,13 @@ void DexedAudioProcessor::setParameter(int index, float newValue) {
 }
 
 int DexedAudioProcessor::getNumPrograms() {
-    return 32;
+    // return 32;
+    return 1;
 }
 
 int DexedAudioProcessor::getCurrentProgram() {
-    return currentProgram;
+    // return currentProgram;
+    return 0;
 }
 
 void DexedAudioProcessor::setCurrentProgram(int index) {
@@ -712,9 +717,10 @@ void DexedAudioProcessor::setCurrentProgram(int index) {
 }
 
 const String DexedAudioProcessor::getProgramName(int index) {
-    if (index >= 32)
-        index = 31;
-    return programNames[index];
+    // if (index >= 32)
+    //     index = 31;
+    // return programNames[index];
+    return "OneSynth";
 }
 
 void DexedAudioProcessor::changeProgramName(int index, const String& newName) {

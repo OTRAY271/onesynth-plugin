@@ -21,6 +21,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "GlobalEditor.h"
+#include "MainEditor.h"
 #include "ParamDialog.h"
 #include "SysexComm.h"
 #include "TuningShow.h"
@@ -40,33 +41,33 @@ DexedAudioProcessorEditor::DexedAudioProcessorEditor (DexedAudioProcessor* owner
 
     processor = ownerFilter;
     
-    lookAndFeel->setDefaultLookAndFeel(lookAndFeel);
+    // lookAndFeel->setDefaultLookAndFeel(lookAndFeel);
     background = lookAndFeel->background;
 
-    // OPERATORS
-    addAndMakeVisible(&(operators[0]));
-    operators[0].setBounds(2, 1, 287, 218);
-    operators[0].bind(processor, 0);
+    // // OPERATORS
+    // addAndMakeVisible(&(operators[0]));
+    // operators[0].setBounds(2, 1, 287, 218);
+    // operators[0].bind(processor, 0);
     
-    addAndMakeVisible(&(operators[1]));
-    operators[1].setBounds(290, 1, 287, 218);
-    operators[1].bind(processor, 1);
+    // addAndMakeVisible(&(operators[1]));
+    // operators[1].setBounds(290, 1, 287, 218);
+    // operators[1].bind(processor, 1);
     
-    addAndMakeVisible(&(operators[2]));
-    operators[2].setBounds(578, 1, 287, 218);
-    operators[2].bind(processor, 2);
+    // addAndMakeVisible(&(operators[2]));
+    // operators[2].setBounds(578, 1, 287, 218);
+    // operators[2].bind(processor, 2);
     
-    addAndMakeVisible(&(operators[3]));
-    operators[3].setBounds(2, 219, 287, 218);
-    operators[3].bind(processor, 3);
+    // addAndMakeVisible(&(operators[3]));
+    // operators[3].setBounds(2, 219, 287, 218);
+    // operators[3].bind(processor, 3);
     
-    addAndMakeVisible(&(operators[4]));
-    operators[4].setBounds(290, 219, 287, 218);
-    operators[4].bind(processor, 4);
+    // addAndMakeVisible(&(operators[4]));
+    // operators[4].setBounds(290, 219, 287, 218);
+    // operators[4].bind(processor, 4);
     
-    addAndMakeVisible(&(operators[5]));
-    operators[5].setBounds(578, 219, 287, 218);
-    operators[5].bind(processor, 5);
+    // addAndMakeVisible(&(operators[5]));
+    // operators[5].setBounds(578, 219, 287, 218);
+    // operators[5].bind(processor, 5);
 
     // add the midi keyboard component..
     addAndMakeVisible (&midiKeyboard);
@@ -74,18 +75,23 @@ DexedAudioProcessorEditor::DexedAudioProcessorEditor (DexedAudioProcessor* owner
     // The DX7 is a badass on the bass, keep it that way
     midiKeyboard.setLowestVisibleKey(24);
 
-    midiKeyboard.setBounds(4, 581, getWidth() - 8, 90);
+    // midiKeyboard.setBounds(4, 581, getWidth() - 8, 90);
+    midiKeyboard.setBounds(4, 138, getWidth() - 8, 90);
 
-    addAndMakeVisible(&global);
-    global.setBounds(2,436,864,144);
-    global.bind(this);
+    addAndMakeVisible(&mainEditor);
+    mainEditor.setBounds(0,0,864,144);
+    mainEditor.bind(this);
+
+    // addAndMakeVisible(&global);
+    // global.setBounds(2,436,864,144);
+    // global.bind(this);
     
-    global.setMonoState(processor->isMonoMode());
+    // global.setMonoState(processor->isMonoMode());
     
-    rebuildProgramCombobox();
-    global.programs->addListener(this);
+    // rebuildProgramCombobox();
+    // global.programs->addListener(this);
     
-    addChildComponent(&cartManager);
+    // addChildComponent(&cartManager);
     
     updateUI();
     startTimer(100);

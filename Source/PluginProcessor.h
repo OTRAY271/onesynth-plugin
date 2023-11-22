@@ -22,6 +22,8 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "nlohmann/json.hpp"
+using json = nlohmann::json;
 
 #include "clap-juce-extensions/clap-juce-extensions.h"
 
@@ -37,6 +39,7 @@
 #include "SysexComm.h"
 #include "EngineMkI.h"
 #include "EngineOpl.h"
+#include "OneSynthParams.h"
 
 struct ProcessorVoice {
     int channel;
@@ -172,6 +175,8 @@ public :
     std::unique_ptr<CtrlFloat> output;
     std::unique_ptr<Ctrl> tune;
 
+    std::unique_ptr<CtrlFloat> searchPosition;
+
     void loadCartridge(Cartridge &cart);
     void setDxValue(int offset, int v);
 
@@ -273,7 +278,10 @@ public :
     void setDpiScaleFactor(float factor);
     float getDpiScaleFactor() {
         return dpiScaleFactor;
-    }    
+    }
+
+    OneSynthParams oneSynthParams;
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DexedAudioProcessor)

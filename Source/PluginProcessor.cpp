@@ -119,6 +119,9 @@ DexedAudioProcessor::DexedAudioProcessor()
     
     mtsClient = NULL;
     mtsClient = MTS_RegisterClient();
+
+    // FileLogger* fileLogger = FileLogger::createDefaultAppLogger("JUCE", "test.log", "start logging.");
+    // Logger::setCurrentLogger(fileLogger);
 }
 
 DexedAudioProcessor::~DexedAudioProcessor() {
@@ -741,8 +744,9 @@ bool DexedAudioProcessor::isOutputChannelStereoPair (int index) const {
 }
 
 bool DexedAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) const {
-    return layouts.getMainOutputChannelSet() == AudioChannelSet::mono()
-                || layouts.getMainOutputChannelSet() == AudioChannelSet::stereo();
+    return layouts.getMainOutputChannelSet() == AudioChannelSet::stereo();
+    // return layouts.getMainOutputChannelSet() == AudioChannelSet::mono()
+    //             || layouts.getMainOutputChannelSet() == AudioChannelSet::stereo();
 }
 
 bool DexedAudioProcessor::acceptsMidi() const {

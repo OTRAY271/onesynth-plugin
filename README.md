@@ -1,143 +1,67 @@
-Dexed - FM Plugin Synth
-=======================
+# OneSynth Plugin
 
+　OneSynthは，1つのつまみを直感的に操作するだけで無数の音色を作り出せるシンセサイザーです。OneSynth Pluginは，それをDAW上でエミュレートするVST/AUプラグインです。加えて，DAWがなくても動作するスタンドアロン版も提供しています。
 
-Please see [Dexed User Website](https://asb2m10.github.io/dexed) for user and download information.
+- 現在開発中のベータ版であるため，インストールと使用は自己責任でお願いします。
+- 開発途上であることに加えローカルのCPUで動作するよう性能を下げていることもあり，音色が思い通りにならないことが多々あるかと思いますが，あくまでも探索的なツールとしてお楽しみください。
+- このプラグインは，DexedをForkして制作しました。
 
-Dexed is a multi platform, multi format plugin synth that is closely modeled on the Yamaha DX7. 
-Under the hood it uses [music-synthesizer-for-android](https://github.com/google/music-synthesizer-for-android) 
-for the synth engine and [JUCE](https://www.juce.com) as an application/plugin wrapper.
+## 動作環境
 
-The goal of this project is to be a tool/companion for the original DX7. Sound engine 
-with 'float' value parameters, different waveform à la TX81z would be great but anything that 
-goes beyond the DX7 should and will be a fork of this project. This is to keep the compatibility with
-the original machine.
+- OS：Macのみ
+- DAW：Logic，Reaper，Ableton Live
 
-Dexed is licensed on the GPL v3. The msfa component (acronym for music synthesizer for android, see msfa 
-in the source folder) stays on the Apache 2.0 license to able to collaborate between projects.
+これらの条件を満たす場合でも動作しないことや不具合が発生することがあります。予めご了承ください。
 
-Changelog
----------
-#### Version 0.9.7 (IN DEVELOPMENT)
-* [MTS-ESP](https://oddsound.com/index.php) microtuning support
-* [CLAP](https://github.com/free-audio/clap) plugin support (IN PROGRESS)
-* Scalable UI upgrade, better UI redraw
-* For developers: cmake is now the built system
+## インストール
 
-#### Version 0.9.6
-* Apple Silicon M1 builds
-* Fix VST3 automation issues
-* Fix to apply UI scaling only when applicable
-* Fix hang notes on program changes
+[インストーラー](https://drive.google.com/file/d/1tfW65xmUMKIeDCXskU21jUjJsQpjDDl-/view?usp=sharing)をダウンロード＆実行してください。スタンドアロン版とVST/AUプラグインが自動でインストールされます。
 
-#### Version 0.9.5
-* Added support for SCL/KBM microtuning
-* Added initial support for MPE performance
-* Upgraded build system to use JUCE 6.0 and build from locally acquired JUCE
-* A Collection of small UI changes, including higher contrast GUI assets, better sub-window management, 
-  and mouse wheel support
-* Added VST3 support
+- pkgファイルを開く際に警告が表示される場合は，[こちらのページ](https://support.apple.com/ja-jp/guide/mac-help/mh40616/mac)を参考に対処をお願いします。
+- スタンドアロン版もしくはVST/AUプラグインを起動してから5分以上待っても画面が現れない場合は，動作対象外です。強制終了してください。
 
-#### Version 0.9.4HF1
-* Fixed sysex messages with unwanted pitch bend
+## 操作方法
 
-#### Version 0.9.4
-* Standalone application version of Dexed
-* Midi learn support for midi CC messages
-* More accurate detune for operators
-* More accurate EG envelopes. thanks @jeremybernstein
-* Pitchbend now listen to any channels
-* Fixed 'clicking' in mono mode
-* Fixed implementation for Midi CC 0x78 and 0x7B (All Sound Off / All Notes Off)
-* Windows/macOS installers
+1. スライダーを左右に動かして音色を探します。
+2. 自分の欲しい音に少しでも近づいたらそこでYESボタンを押し，1に戻ります。
+3. スライダーをどこに動かしても欲しい音に近づかなければNOボタンを押し，1に戻ります。
 
-#### Version 0.9.3
-* Preliminary live operator level update
-* Support for incoming parameter change messages
-* More permissive on cartridge sysex type; the validation is now done on size (4104/4096 bytes)
-* Midi 'All Note Off; 0x7B' support
-* Breakpoint values are now shown as notes. thanks @tico-tico
-* Fixed op feedback calibrated for Mark I engine
-* Fixed for breakpoint levels. thanks @Sentinel77
-* Fixed LFO delay issue issues upon large values
-* Fixed for receiving sysex cartridge. thanks @Sentinel77
-* Fixed operator switch changes are now sent via sysex
+自分の欲しい音に十分近づくまで，1〜3を繰り返してください。
 
-#### Version 0.9.2
-* Mark I engine is now the default engine
-* Added operator mute switch
-* Added Tune (MASTER TUNE ADJ) knob
-* Correct feedback implementation for Algo 4 and 6 (engine Mk I only)
-* Single click program select
-* Fixed sysex issue with wrong machine ID
-* Fixed for parameter hosts values. thanks @Sentinel77
+- LOADボタンを押すと，探索の初期地点としてプリセットが選べます。
+- SAVEボタンを押すと，現在の音色をファイルに保存できます。
+- 音が止まらなくなった場合は，PANICボタンを押してください。
 
-#### Version 0.9.1
-* Mark I engine now uses 10-bit sine/exp tables. Still a work in progress but we are getting there
-* More accurate FM feedback on the Mark I and OPL Series engine
-* Wheel, Foot, Breath, Aftertouch modulation support
-* Fixed the display of some more 'complex' algorithms
-* Drop of .syx files in the cartridge manager
-* Dexed data directory can now optionally reside in the same location where the binary is installed
-* 'Send current program to DX7' in Cartridge Manager works as designed
-* Support for sysex streams (multiple sysex messages in one .syx file)
-* falkTX upstream fixes for Linux
+## 既知の不具合
 
-#### Version 0.9.0
-* Apple AU support
-* Cartridge Manager
-* Store action also can update the currently loaded cartridge
-* Basic theming
-* Fixed the UI corruption when more than one Dexed instance was loaded
-* Fixed wrong display value issues (coarse and fine)
+- ウィンドウを閉じてから再度開くと，音色は変わりませんがスライダーの位置が中央に戻ってしまいます。
+- 入力した音に対して，出力される音のオクターブが異なってしまう場合があります。
+- ピッチが不正確な音色が生成されることがあります。
 
-Credits & thanks
-----------------
-* DX Synth engine : Raph Levien and the [msfa](https://github.com/google/music-synthesizer-for-android) team 
-* [Surge Synth Team](https://surge-synth-team.org/) for substantial contributions like microtuning and MPE support.
-* Graphical design : AZur Studio
-* [Sentinel77](https://github.com/Sentinel77) for numerous engine fixes
-* LP Filter : Filatov Vadim (2DaT); taken from the excellent [Obxd](https://obxd.wordpress.com) project
-* PPPlay : Great [OPL3](https://github.com/stohrendorf/ppplay) implementation, with documented code :D
-* DX7 program compilation : Jean-Marc Desprez (author of [SynprezFM](http://www.synprez.com/SynprezFM)) 
-* DX7 programs : Dave Benson, Frank Carvalho, Tim Conrardy, Jack Deckard, Chris Dodunski, Tim Garrett, Hitaye, Stephan Ibsen, Christian Jezreel, Narfman, Godric Wilkie
-* falkTX [distrho](http://distrho.sourceforge.net/)
+## アンインストール
 
-TODO - Dexed 
-------------
-* Various code cleanup
-* Yamaha 4 operators (DX21/DX27/DX100) sysex import
+以下のファイルを削除してください。
 
-TODO - msfa
------------
-* Portamento implementation
-* Better Amplitude Modulation
-* Accurate live operator level envelope updates
+`~/Library/Application Support/OneSynth`
 
-# How to build
+`/Applications/OneSynth.app`
 
-Clone Dexed from github
+`~/Library/Audio/Plug-Ins/VST3/OneSynth.vst3`
 
-```
-~ $ git clone https://github.com/asb2m10/dexed.git
-```
+`~/Library/Audio/Plug-Ins/Components/OneSynth.component`
 
-Dexed has several submodules it now depends on, including VST3/CLAP and a library to support non standard tuning. After you clone your first step is
+## OneSynthについて
 
-```
-~ $ cd dexed
-~/dexed $ git submodule update --init --recursive
-```
+仕組みについては[ProtoPedia](https://protopedia.net/prototype/4346)をご覧ください。
 
-Then you crate the cmake build files that are will be created in the build directory. On that build you can trigger your favorite IDE or simply use `--build` cmake option.
+## 謝辞
 
-```
-~/dexed $ mkdir build
-~/dexed $ cd build
-~/dexed/build $ cmake .. -DJUCE_COPY_PLUGIN_AFTER_BUILD=TRUE
-~/dexed/build $ cmake --build .
-```
+開発にあたり以下のOSS・手法を利用させていただきました。開発者の方々に感謝申し上げます。
 
-If you get missing header compilation errors, be sure to check the [known Linux dependencies](https://github.com/asb2m10/dexed/wiki/Linux-builds-dependencies) based on your distribution for Linux.
+https://github.com/asb2m10/dexed
 
-Binaries will be found in `~/dexed/build/Source/Dexed_artefacts/*`
+https://github.com/gwendal-lv/spinvae
+
+Le Vaillant, G., & Dutoit, T. (2023). Synthesizer Preset Interpolation Using Transformer Auto-Encoders. 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), 1-5.
+
+Chiu, C. H., Koyama, Y., Lai, Y. C., Igarashi, T., & Yue, Y. (2020). Human-in-the-loop differential subspace search in high-dimensional latent space. ACM Transactions on Graphics (TOG), 39(4), 85-1.
