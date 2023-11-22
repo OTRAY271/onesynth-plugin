@@ -60,6 +60,8 @@
 
 https://github.com/asb2m10/dexed
 
+https://github.com/nlohmann/json
+
 https://github.com/gwendal-lv/spinvae
 
 Le Vaillant, G., & Dutoit, T. (2023). Synthesizer Preset Interpolation Using Transformer Auto-Encoders. 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), 1-5.
